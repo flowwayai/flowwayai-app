@@ -3,294 +3,381 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="FlowwayAI — AI Automation Blueprints for Coaches, Agencies & Businesses. Stop losing leads. Start running on autopilot."/>
+<meta name="description" content="FlowwayAI — AI Automation Blueprints for Coaches, Agencies & Businesses."/>
 <meta property="og:title" content="FlowwayAI — AI Automation Blueprints"/>
 <meta property="og:description" content="Get your free AI workflow blueprint in 60 seconds. Find out exactly what to automate in your business."/>
 <title>FlowwayAI — AI Automation Blueprints</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#060C18;--bg2:#0C1526;--bg3:#111E35;
-  --cyan:#00D4FF;--cyan-dim:rgba(0,212,255,0.12);--cyan-glow:rgba(0,212,255,0.3);
-  --orange:#FF6B35;--green:#22C55E;
-  --white:#fff;--text:#CBD5E1;--muted:#64748B;
-  --border:rgba(255,255,255,0.07);--border-cyan:rgba(0,212,255,0.22);
-  --radius:16px;--font-h:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;
+/* ── BASE & RESET ── */
+:root {
+  color-scheme: dark; /* Forces native dark mode on inputs/scrollbars */
+  --bg: #02050A;
+  --bg-card: rgba(10, 17, 32, 0.6);
+  --cyan: #00D4FF;
+  --cyan-dim: rgba(0, 212, 255, 0.15);
+  --cyan-glow: rgba(0, 212, 255, 0.4);
+  --orange: #FF6B35;
+  --green: #22C55E;
+  --white: #ffffff;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-cyan: rgba(0, 212, 255, 0.35);
+  --radius: 24px;
+  --font-h: 'Space Grotesk', sans-serif;
+  --font-b: 'Inter', sans-serif;
 }
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--font-b);overflow-x:hidden;-webkit-font-smoothing:antialiased}
-::selection{background:var(--cyan-dim);color:var(--cyan)}
-::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:3px}
 
-/* Animations */
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 var(--cyan-glow)}70%{box-shadow:0 0 0 8px transparent}}
-@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-@keyframes orb{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-15px)}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html.lenis, html.lenis body { height: auto; width: 100vw; overflow-x: hidden; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+body { background-color: var(--bg); color: var(--text); font-family: var(--font-b); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+::selection { background: var(--cyan); color: #000; }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: rgba(0, 212, 255, 0.5); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
 
-/* Layout */
-.container{max-width:1100px;margin:0 auto;padding:0 24px;width:100%}
-.section{padding:88px 24px}
-.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
-.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
-.flex-center{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
-.text-center{text-align:center}
+/* ── PRELOADER ── */
+#preloader { position: fixed; inset: 0; background: var(--bg); z-index: 999999; display: flex; align-items: center; justify-content: center; flex-direction: column; color: var(--cyan); font-family: var(--font-h); font-weight: 800; }
+#preloader-text { font-size: clamp(3rem, 10vw, 8rem); line-height: 1; letter-spacing: -2px; text-shadow: 0 0 30px var(--cyan-glow); }
+.preloader-bar { width: 200px; height: 4px; background: rgba(255,255,255,0.1); margin-top: 20px; border-radius: 4px; overflow: hidden; position: relative; }
+#preloader-fill { height: 100%; width: 0%; background: var(--cyan); box-shadow: 0 0 15px var(--cyan); }
 
-/* Typography */
-.overline{font-family:var(--font-h);font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:16px}
-h1{font-family:var(--font-h);font-size:clamp(2.4rem,5.5vw,4rem);font-weight:800;line-height:1.1;color:var(--white);margin-bottom:22px}
-h2{font-family:var(--font-h);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;line-height:1.15;color:var(--white);margin-bottom:14px}
-h3{font-family:var(--font-h);font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:10px}
-.grad{background:linear-gradient(135deg,var(--cyan),#8BA4FF,var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.body-lg{font-size:1.1rem;line-height:1.75;color:var(--text)}
-.muted{color:var(--muted);line-height:1.65;font-size:.92rem}
+/* ── CINEMATIC OVERLAYS & CANVAS ── */
+#neural-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; opacity: 0.6; }
+.vignette { position: fixed; inset: 0; pointer-events: none; z-index: 9997; background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.9) 150%); }
 
-/* Buttons */
-.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;background:linear-gradient(135deg,var(--cyan),#7B9FFF);color:#000;font-family:var(--font-h);font-weight:700;font-size:.95rem;border-radius:50px;border:none;cursor:pointer;text-decoration:none;box-shadow:0 0 28px var(--cyan-glow);transition:transform .2s,box-shadow .2s}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 44px var(--cyan-glow)}
-.btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:transparent;color:var(--white);font-family:var(--font-h);font-weight:600;font-size:.95rem;border-radius:50px;border:1px solid var(--border-cyan);cursor:pointer;text-decoration:none;transition:all .2s}
-.btn-secondary:hover{border-color:var(--cyan);color:var(--cyan)}
+/* ── CUSTOM CURSOR ── */
+@media (min-width: 1024px) { body, a, button, select, input, textarea { cursor: none; } }
+#cursor-dot { position: fixed; width: 8px; height: 8px; background: var(--white); border-radius: 50%; pointer-events: none; z-index: 100000; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s, background 0.2s; box-shadow: 0 0 15px var(--white); }
+#cursor-ring { position: fixed; width: 40px; height: 40px; border: 1px solid rgba(0,212,255,0.8); border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background 0.3s, border 0.3s; display: flex; align-items: center; justify-content: center; font-family: var(--font-h); font-size: 10px; font-weight: 800; color: #000; letter-spacing: 1px; text-transform: uppercase; }
 
-/* Cards */
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px;transition:transform .3s,border-color .3s}
-.card:hover{transform:translateY(-5px);border-color:var(--border-cyan)}
-.glass{background:rgba(12,21,38,.85);backdrop-filter:blur(20px);border:1px solid var(--border-cyan);border-radius:var(--radius);padding:28px}
+/* ── TYPOGRAPHY & LAYOUT ── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; position: relative; z-index: 2; }
+.section { padding: 140px 24px; position: relative; z-index: 2; }
+@media (max-width: 768px) { .section { padding: 90px 24px; } }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+.flex-center { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
+.text-center { text-align: center; }
 
-/* Forms */
-.form-group{margin-bottom:18px}
-.form-label{display:block;color:var(--text);font-weight:500;margin-bottom:8px;font-size:.9rem}
-select,textarea,input[type=text]{width:100%;padding:13px 16px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--white);font-family:var(--font-b);font-size:1rem;outline:none;transition:border-color .2s}
-select:focus,textarea:focus,input[type=text]:focus{border-color:var(--cyan)}
-select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748B' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
-textarea{resize:vertical;min-height:90px}
-select option{background:var(--bg2)}
+.overline { font-family: var(--font-h); font-size: 13px; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; color: var(--cyan); display: inline-block; margin-bottom: 20px; padding: 6px 18px; background: rgba(0,212,255,0.08); border: 1px solid var(--border-cyan); border-radius: 50px; backdrop-filter: blur(5px); }
+h1 { font-family: var(--font-h); font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 800; line-height: 1.05; color: var(--white); margin-bottom: 28px; letter-spacing: -2px; }
+h2 { font-family: var(--font-h); font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; color: var(--white); margin-bottom: 20px; letter-spacing: -1.5px; }
+h3 { font-family: var(--font-h); font-size: 1.6rem; font-weight: 700; color: var(--white); margin-bottom: 12px; letter-spacing: -0.5px; }
 
-/* ── NAVBAR ──────────────────────────────────────────────── */
-#navbar{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 24px;transition:all .3s}
-#navbar.scrolled{background:rgba(6,12,24,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.nav-inner{max-width:1100px;margin:0 auto;height:70px;display:flex;align-items:center;justify-content:space-between}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--cyan),#7B9FFF);display:flex;align-items:center;justify-content:center}
-.logo-text{font-family:var(--font-h);font-weight:800;font-size:1.15rem;color:var(--white)}
-.nav-links{display:flex;align-items:center;gap:28px}
-.nav-link{color:var(--muted);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .2s}
-.nav-link:hover{color:var(--white)}
+/* Perfected Gradients */
+.grad { background: linear-gradient(135deg, var(--cyan), #8BA4FF, var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: inline-block; }
+.hero-grad { background: linear-gradient(270deg, var(--cyan), #8BA4FF, var(--white), var(--cyan)); background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: inline-block; animation: gradientShift 6s ease infinite; }
+@keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-/* ── HERO ────────────────────────────────────────────────── */
-#hero{padding:160px 24px 80px;position:relative;overflow:hidden}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;border-radius:50px;background:var(--cyan-dim);border:1px solid var(--border-cyan);margin-bottom:30px}
-.hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
-.hero-badge span{font-size:.8rem;color:var(--cyan);font-weight:600;letter-spacing:.4px}
-.hero-stats{display:flex;gap:40px;justify-content:center;flex-wrap:wrap;margin-top:60px}
-.hero-stat .num{font-family:var(--font-h);font-weight:800;font-size:1.75rem;color:var(--white)}
-.hero-stat .unit{color:var(--cyan);font-size:.9rem}
-.hero-stat .lbl{color:var(--muted);font-size:.78rem;margin-top:3px}
-.tools-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:36px}
-.tool-badge{padding:6px 14px;border-radius:50px;background:var(--bg2);border:1px solid var(--border);font-size:.78rem;color:var(--muted);font-weight:500}
+.highlight-block { position: relative; background: rgba(0,212,255,0.15); color: var(--cyan); border: 1px solid rgba(0,212,255,0.5); padding: 4px 18px; border-radius: 12px; display: inline-block; transform: rotate(-2deg); box-shadow: 0 0 40px rgba(0,212,255,0.3); font-weight: 800; letter-spacing: -1px; transition: transform 0.3s; z-index: 1; }
+.highlight-block:hover { transform: rotate(0deg) scale(1.05); box-shadow: 0 0 60px rgba(0,212,255,0.5); }
 
-/* Grid background */
-.grid-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.grid-bg svg{position:absolute;inset:0;width:100%;height:100%}
-.orb{position:absolute;border-radius:50%;pointer-events:none}
-.orb1{top:15%;left:10%;width:380px;height:380px;background:radial-gradient(circle,rgba(0,212,255,.1) 0%,transparent 70%);animation:orb 9s ease-in-out infinite}
-.orb2{top:25%;right:8%;width:280px;height:280px;background:radial-gradient(circle,rgba(123,159,255,.08) 0%,transparent 70%);animation:orb 12s ease-in-out infinite reverse}
+.body-lg { font-size: 1.25rem; line-height: 1.8; color: var(--text); font-weight: 300; }
+.muted { color: var(--muted); line-height: 1.7; font-size: 1.05rem; font-weight: 400; }
 
-/* ── PAIN ────────────────────────────────────────────────── */
-#pain{padding:40px 24px 80px}
-.pain-card{border-left:3px solid var(--orange)}
-.pain-card:hover{border-color:var(--cyan)}
-.pain-icon{font-size:1.8rem;margin-bottom:14px}
+/* ── BUTTONS ── */
+.btn-primary { display: inline-flex; align-items: center; gap: 10px; padding: 20px 42px; background: linear-gradient(135deg, var(--cyan), #7B9FFF); color: #000; font-family: var(--font-h); font-weight: 800; font-size: 1.05rem; border-radius: 50px; border: none; text-decoration: none; box-shadow: 0 0 40px var(--cyan-glow); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; cursor: pointer; }
+.btn-primary::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), transparent); transform: skewX(-20deg); animation: shimmer 4s infinite; }
+@keyframes shimmer { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
+.btn-primary:hover { box-shadow: 0 0 60px rgba(0,212,255,0.8); transform: scale(1.05); }
 
-/* ── TOOL ────────────────────────────────────────────────── */
-#tool{padding:88px 24px;background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 50%,var(--bg) 100%)}
-.tool-wrap{max-width:700px;margin:0 auto}
-#blueprint-result{display:none;animation:fadeUp .5s ease both}
-.bp-header{background:linear-gradient(135deg,rgba(0,212,255,.08),rgba(123,159,255,.08));border:1px solid var(--border-cyan);border-radius:16px 16px 0 0;border-bottom:none;padding:28px}
-.bp-steps{border:1px solid var(--border-cyan);border-top:none;border-bottom:none;padding:28px;background:rgba(12,21,38,.85)}
-.bp-win{border:1px solid rgba(255,107,53,.2);border-top:none;border-bottom:none;padding:20px 28px;background:rgba(255,107,53,.04)}
-.bp-cta{border:1px solid var(--border-cyan);border-top:none;border-radius:0 0 16px 16px;padding:28px;background:rgba(12,21,38,.85);text-align:center}
-.step-row{display:flex;gap:14px;margin-bottom:22px}
-.step-num{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),#7B9FFF);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-weight:700;color:#000;font-size:.82rem}
-.step-line{width:1px;height:20px;background:var(--border);margin:4px auto 0}
-.step-title{font-family:var(--font-h);color:var(--white);font-weight:600;font-size:.95rem}
-.step-tool{padding:3px 10px;background:var(--cyan-dim);border:1px solid var(--border-cyan);border-radius:50px;font-size:.72rem;color:var(--cyan);white-space:nowrap}
-.stat-box{text-align:center;padding:12px 18px;background:var(--bg);border-radius:10px;border:1px solid var(--border)}
-.stat-val{font-family:var(--font-h);font-weight:700;font-size:1rem}
-.error-msg{color:var(--orange);font-size:.84rem;margin-bottom:14px}
-.spinner{display:inline-block;width:17px;height:17px;border:2px solid rgba(0,0,0,.25);border-top-color:#000;border-radius:50%;animation:spin .6s linear infinite}
-#generate-btn:disabled{opacity:.65;cursor:not-allowed}
+.btn-secondary { display: inline-flex; align-items: center; gap: 10px; padding: 18px 40px; background: rgba(255,255,255,0.02); color: var(--white); font-family: var(--font-h); font-weight: 700; font-size: 1.05rem; border-radius: 50px; border: 1px solid var(--border-cyan); text-decoration: none; backdrop-filter: blur(15px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; }
+.btn-secondary:hover { border-color: var(--cyan); background: rgba(255,255,255,0.05); color: var(--cyan); transform: scale(1.05); box-shadow: 0 0 30px rgba(0,212,255,0.15); }
 
-/* Self-build section */
-.selfbuild{background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.2);border-radius:var(--radius);padding:24px;margin-top:20px}
-.selfbuild-title{font-family:var(--font-h);font-weight:700;color:var(--green);font-size:.9rem;margin-bottom:12px}
-.selfbuild-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px}
+.btn-linkedin { display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; background: rgba(10,102,194,0.15); color: #fff; font-family: var(--font-b); font-weight: 600; font-size: 1rem; border-radius: 50px; border: 1px solid rgba(10,102,194,0.6); text-decoration: none; transition: all 0.3s; cursor: pointer; }
+.btn-linkedin:hover { background: rgba(10,102,194,1); border-color: #0a66c2; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(10,102,194,0.4); }
 
-/* ── RESULTS ─────────────────────────────────────────────── */
-#results{padding:88px 24px}
-.result-card{border-top:3px solid var(--cyan)}
-.result-stat{padding:4px 12px;border-radius:50px;font-size:.76rem;font-weight:700;font-family:var(--font-h)}
+/* ── GLASS CARDS ── */
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 44px; transition: border-color 0.4s, box-shadow 0.4s; position: relative; overflow: hidden; backdrop-filter: blur(20px); }
+.card::before { content: ''; position: absolute; top: var(--y, -100%); left: var(--x, -100%); width: 500px; height: 500px; background: radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 60%); transform: translate(-50%, -50%); pointer-events: none; transition: opacity 0.3s; opacity: 0; z-index: 0; }
+.card:hover::before { opacity: 1; }
+.card > * { position: relative; z-index: 1; }
+.card:hover { border-color: var(--border-cyan); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
 
-/* ── HOW IT WORKS ────────────────────────────────────────── */
-#how-it-works{padding:88px 24px;background:var(--bg2)}
-.step-big-num{font-family:var(--font-h);font-weight:800;font-size:3.5rem;color:var(--border);line-height:1;margin-bottom:14px;letter-spacing:-2px}
+/* ── NAVBAR ── */
+#navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 90000; padding: 0 24px; transition: all 0.4s; }
+#navbar.scrolled { background: rgba(2,5,10,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 10px 24px; }
+.nav-inner { max-width: 1200px; margin: 0 auto; height: 80px; display: flex; align-items: center; justify-content: space-between; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-icon { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, var(--cyan), #7B9FFF); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px var(--cyan-glow); }
+.logo-text { font-family: var(--font-h); font-weight: 800; font-size: 1.4rem; color: var(--white); letter-spacing: -0.5px; }
+.nav-links { display: flex; align-items: center; gap: 36px; }
+.nav-link { color: var(--muted); text-decoration: none; font-size: 0.95rem; font-weight: 600; transition: color 0.2s; }
+.nav-link:hover { color: var(--white); }
 
-/* ── FOUNDER ─────────────────────────────────────────────── */
-#founder{padding:88px 24px}
-.founder-card{background:var(--bg2);border:1px solid var(--border-cyan);border-radius:var(--radius);padding:44px;max-width:860px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:start}
-@media(max-width:600px){.founder-card{grid-template-columns:1fr;text-align:center}}
-.founder-avatar{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),#7B9FFF);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-weight:800;font-size:2rem;color:#000;flex-shrink:0}
-.founder-badge{display:inline-block;padding:4px 12px;border-radius:50px;background:var(--cyan-dim);border:1px solid var(--border-cyan);font-size:.75rem;color:var(--cyan);font-weight:600;margin-bottom:14px}
-.founder-quote{font-style:italic;color:var(--text);line-height:1.7;font-size:1rem;margin:16px 0;padding-left:16px;border-left:2px solid var(--cyan)}
-.cred-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
-.cred{padding:5px 14px;border-radius:50px;background:var(--bg3);border:1px solid var(--border);font-size:.78rem;color:var(--muted)}
+/* Mobile Menu */
+.mobile-toggle { display: none; background: transparent; border: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 90002; }
+.mobile-toggle span { width: 30px; height: 3px; background: var(--white); transition: 0.3s; border-radius: 3px; }
+#mobile-menu { position: fixed; inset: 0; background: rgba(2,5,10,0.98); backdrop-filter: blur(30px); z-index: 90001; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; opacity: 0; visibility: hidden; }
+.mobile-menu-link { font-family: var(--font-h); font-size: 2.5rem; font-weight: 800; color: var(--white); text-decoration: none; text-transform: uppercase; letter-spacing: -1px; }
+@media (max-width: 900px) { .nav-links { display: none; } .mobile-toggle { display: flex; } }
 
-/* ── PRICING ─────────────────────────────────────────────── */
-#pricing{padding:88px 24px;background:var(--bg2)}
-.price-card{position:relative;transition:transform .3s}
-.price-card:hover{transform:translateY(-5px)}
-.price-featured{border-color:var(--cyan)!important;box-shadow:0 0 40px var(--cyan-dim)}
-.price-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);padding:4px 18px;background:linear-gradient(135deg,var(--cyan),#7B9FFF);border-radius:50px;font-size:.73rem;font-weight:700;color:#000;font-family:var(--font-h);white-space:nowrap}
-.price-amount{font-family:var(--font-h);font-weight:800;font-size:2.4rem;color:var(--white);margin:10px 0}
-.price-amount span{font-size:.9rem;color:var(--muted);font-weight:400}
-.check-item{display:flex;gap:9px;align-items:flex-start;margin-bottom:9px;font-size:.87rem}
-.check-icon{color:var(--cyan);flex-shrink:0;margin-top:1px}
+/* ── HERO ── */
+#hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 140px; padding-bottom: 80px; position: relative; }
+.hero-badge { display: inline-flex; align-items: center; gap: 10px; padding: 10px 26px; border-radius: 50px; background: rgba(0,212,255,0.06); border: 1px solid var(--border-cyan); margin-bottom: 36px; backdrop-filter: blur(10px); }
+.hero-badge .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); animation: pulse 2s infinite; }
+.hero-stats { display: flex; gap: 60px; justify-content: center; flex-wrap: wrap; margin-top: 80px; }
+.hero-stat .num { font-family: var(--font-h); font-weight: 800; font-size: 3rem; color: var(--white); line-height: 1; }
+.hero-stat .unit { color: var(--cyan); font-size: 1.1rem; font-weight: 800; }
+.hero-stat .lbl { color: var(--muted); font-size: 0.9rem; margin-top: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; }
 
-/* ── FINAL CTA ───────────────────────────────────────────── */
-#final-cta{padding:88px 24px;background:var(--bg);position:relative;overflow:hidden}
-.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(0,212,255,.07) 0%,transparent 70%);pointer-events:none}
+/* ── GOD MODE: TECH STACK NEURAL GRID ── */
+.tech-stack-container { position: relative; padding: 50px 40px; background: var(--bg-card); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 24px; margin-top: 80px; overflow: hidden; max-width: 900px; margin-left: auto; margin-right: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.4); backdrop-filter: blur(20px); }
+.tech-stack-container::before { content: ''; position: absolute; top: var(--mouse-y, 50%); left: var(--mouse-x, 50%); transform: translate(-50%, -50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; z-index: 0; pointer-events: none; }
+.tech-stack-container:hover::before { opacity: 1; }
+.tech-header { position: relative; z-index: 2; width: 100%; color: var(--white); font-size: 1.1rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 30px; font-weight: 800; text-align: center; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+.tools-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 2; }
+.tool-badge { position: relative; overflow: hidden; padding: 12px 26px; border-radius: 50px; background: #0B1426; border: 1px solid rgba(255, 255, 255, 0.2); font-size: 1.05rem; color: #ffffff; font-weight: 700; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+.tool-badge::before { content: ''; position: absolute; top: var(--mouse-y, 50%); left: var(--mouse-x, 50%); transform: translate(-50%, -50%); width: 150px; height: 150px; background: radial-gradient(circle, rgba(0, 212, 255, 0.6) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; z-index: -1; pointer-events: none; }
+.tool-badge:hover { transform: translateY(-5px); border-color: #00D4FF; box-shadow: 0 10px 25px rgba(0,212,255,0.4); color: #fff; }
+.tool-badge:hover::before { opacity: 1; }
+@keyframes floatTool { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.tool-badge { animation: floatTool 4s ease-in-out infinite; }
+.tool-badge:nth-child(even) { animation-delay: 0.5s; animation-duration: 4.5s; }
+.tool-badge:nth-child(3n) { animation-delay: 0.2s; animation-duration: 3.8s; }
+.tool-badge:hover { animation-play-state: paused; }
 
-/* ── FOOTER ──────────────────────────────────────────────── */
-footer{background:var(--bg);border-top:1px solid var(--border);padding:48px 24px 32px}
-.footer-inner{max-width:1100px;margin:0 auto}
-.footer-top{display:grid;grid-template-columns:1fr auto auto;gap:48px;margin-bottom:40px;align-items:start}
-@media(max-width:700px){.footer-top{grid-template-columns:1fr}}
-.footer-about p{color:var(--muted);font-size:.87rem;line-height:1.7;margin-top:10px;max-width:280px}
-.footer-col-title{font-family:var(--font-h);font-weight:700;color:var(--white);font-size:.85rem;margin-bottom:14px;letter-spacing:.5px}
-.footer-links{display:flex;flex-direction:column;gap:10px}
-.footer-link{color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .2s}
-.footer-link:hover{color:var(--cyan)}
-.contact-item{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.contact-icon{color:var(--cyan);font-size:.9rem;flex-shrink:0}
-.contact-text{color:var(--muted);font-size:.84rem}
-.contact-text a{color:var(--muted);text-decoration:none;transition:color .2s}
-.contact-text a:hover{color:var(--cyan)}
-.footer-bottom{border-top:1px solid var(--border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.footer-copy{color:var(--muted);font-size:.78rem}
-.trust-badges{display:flex;gap:8px;flex-wrap:wrap}
-.trust-badge{padding:4px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;font-size:.72rem;color:var(--muted)}
+/* Marquee */
+.marquee-wrapper { width: 100vw; overflow: hidden; background: #000; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 24px 0; transform: rotate(-1.5deg) scale(1.05); position: relative; z-index: 10; margin-top: 40px; }
+.marquee { display: flex; white-space: nowrap; font-family: var(--font-h); font-weight: 800; font-size: 4rem; text-transform: uppercase; }
+.marquee span { padding: 0 50px; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.25); transition: color 0.4s; }
+.marquee-wrapper:hover span { color: var(--cyan); -webkit-text-stroke: 1px transparent; text-shadow: 0 0 20px rgba(0,212,255,0.3); }
 
-/* Responsive */
-@media(max-width:768px){
-  #hero{padding:130px 20px 60px}
-  .nav-links .nav-link{display:none}
-  .hero-stats{gap:24px}
-  .founder-quote{padding-left:10px}
-}
-/* Animate on scroll */
-.fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
-.fade-up.visible{opacity:1;transform:none}
+/* ── PAIN ── */
+.pain-card { border-top: 4px solid var(--orange); }
+.pain-icon { font-size: 3rem; margin-bottom: 24px; filter: drop-shadow(0 0 15px rgba(255,107,53,0.4)); }
+
+/* ── TOOL / BLUEPRINT FORM PERFECTED ── */
+.blueprint-container { background: rgba(10, 17, 32, 0.85); border: 1px solid var(--border-cyan); border-radius: 24px; padding: 50px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255,255,255,0.05); backdrop-filter: blur(25px); max-width: 860px; margin: 0 auto; position: relative; z-index: 10; overflow: hidden; }
+@media (max-width: 768px) { .blueprint-container { padding: 30px 20px; } }
+.form-group { margin-bottom: 28px; }
+.form-label { display: block; color: var(--white); font-weight: 700; margin-bottom: 12px; font-size: 1.05rem; letter-spacing: 0.5px; }
+
+/* The Exact Fix for Dropdown Contrast */
+select, textarea, input[type=text] { width: 100%; padding: 20px 26px; background-color: #0F172A; border: 1px solid rgba(0,212,255,0.4); border-radius: 16px; color: #ffffff; font-family: var(--font-b); font-size: 1.1rem; outline: none; transition: all 0.3s ease; box-shadow: inset 0 4px 15px rgba(0,0,0,0.5); }
+select option { background-color: #0F172A; color: #ffffff; font-size: 1.1rem; padding: 10px; }
+select:focus, textarea:focus, input[type=text]:focus { border-color: var(--cyan); box-shadow: 0 0 25px rgba(0,212,255,0.3), inset 0 4px 15px rgba(0,0,0,0.5); background-color: #1E293B; }
+select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='12'%3E%3Cpath d='M1 1l7 7 7-7' stroke='%2300D4FF' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 26px center; padding-right: 60px; cursor: pointer; }
+textarea { resize: vertical; min-height: 140px; }
+
+/* Laser Scan Animation for Form Generation */
+.laser-scan { position: absolute; top: -100%; left: 0; width: 100%; height: 20px; background: linear-gradient(to bottom, transparent, var(--cyan), transparent); box-shadow: 0 0 30px var(--cyan); opacity: 0; pointer-events: none; z-index: 50; }
+
+#blueprint-result { display: none; }
+.bp-header { background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(123,159,255,0.08)); border: 1px solid var(--border-cyan); border-radius: 24px 24px 0 0; border-bottom: none; padding: 40px; }
+.bp-steps { border: 1px solid var(--border-cyan); border-top: none; border-bottom: none; padding: 40px; background: rgba(10,17,32,0.9); }
+.bp-win { border: 1px solid rgba(255,107,53,0.5); border-top: none; border-bottom: none; padding: 30px 40px; background: rgba(255,107,53,0.1); }
+.bp-cta { border: 1px solid var(--border-cyan); border-top: none; border-radius: 0 0 24px 24px; padding: 40px; background: rgba(10,17,32,0.9); text-align: center; }
+.step-row { display: flex; gap: 24px; margin-bottom: 36px; }
+.step-num { flex-shrink: 0; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), #7B9FFF); display: flex; align-items: center; justify-content: center; font-family: var(--font-h); font-weight: 800; color: #000; font-size: 1.2rem; box-shadow: 0 0 30px rgba(0,212,255,0.5); }
+.step-line { width: 2px; height: 100%; background: linear-gradient(to bottom, var(--cyan), transparent); margin: 14px auto 0; min-height: 40px; opacity: 0.5; }
+.step-title { font-family: var(--font-h); color: var(--white); font-weight: 800; font-size: 1.3rem; }
+.step-tool { padding: 6px 16px; background: rgba(0,212,255,0.15); border: 1px solid rgba(0,212,255,0.5); border-radius: 50px; font-size: 0.85rem; color: var(--cyan); white-space: nowrap; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+.stat-box { text-align: center; padding: 18px 28px; background: rgba(0,0,0,0.6); border-radius: 14px; border: 1px solid var(--border); }
+.stat-val { font-family: var(--font-h); font-weight: 800; font-size: 1.5rem; }
+.spinner { display: inline-block; width: 24px; height: 24px; border: 3px solid rgba(0,0,0,0.3); border-top-color: #000; border-radius: 50%; animation: spin 0.6s linear infinite; }
+.selfbuild { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.4); border-radius: var(--radius); padding: 36px; margin-top: 24px; }
+.selfbuild-title { font-family: var(--font-h); font-weight: 800; color: var(--green); font-size: 1.3rem; margin-bottom: 20px; }
+.selfbuild-row { display: flex; gap: 18px; align-items: flex-start; margin-bottom: 14px; }
+
+/* ── RESULTS ── */
+.result-card { border-top: 4px solid var(--cyan); }
+.result-stat { padding: 8px 20px; border-radius: 50px; font-size: 0.9rem; font-weight: 800; font-family: var(--font-h); text-transform: uppercase; }
+
+/* ── HORIZONTAL PROCESS ── */
+.horizontal-wrap { overflow: hidden; width: 100vw; }
+.horizontal-container { display: flex; width: max-content; padding: 0 10vw; gap: 80px; align-items: center; height: 70vh; }
+.horizontal-item { width: 500px; flex-shrink: 0; }
+.step-big-num { font-family: var(--font-h); font-weight: 800; font-size: 7rem; color: rgba(255,255,255,0.03); line-height: 1; margin-bottom: 24px; letter-spacing: -4px; transition: color 0.5s ease; -webkit-text-stroke: 1px rgba(255,255,255,0.15); }
+.horizontal-item:hover .step-big-num { color: var(--cyan); -webkit-text-stroke: 0px transparent; filter: drop-shadow(0 0 30px rgba(0,212,255,0.6)); }
+@media (max-width: 900px) { .horizontal-container { flex-direction: column; width: 100%; height: auto; padding: 0 24px; gap: 40px; } .horizontal-item { width: 100%; } }
+
+/* ── FOUNDER ── */
+.founder-card { background: var(--bg-card); backdrop-filter: blur(24px); border: 1px solid var(--border-cyan); border-radius: var(--radius); padding: 60px; max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: auto 1fr; gap: 50px; align-items: start; }
+@media(max-width:768px){ .founder-card { grid-template-columns: 1fr; text-align: center; padding: 40px 24px; } }
+.founder-avatar { width: 140px; height: 140px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), #7B9FFF); display: flex; align-items: center; justify-content: center; font-family: var(--font-h); font-weight: 800; font-size: 3rem; color: #000; flex-shrink: 0; box-shadow: 0 0 50px var(--cyan-glow); }
+.founder-badge { display: inline-block; padding: 8px 20px; border-radius: 50px; background: rgba(0,212,255,0.15); border: 1px solid rgba(0,212,255,0.5); font-size: 0.85rem; color: var(--cyan); font-weight: 800; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1.5px; }
+.founder-quote { font-style: italic; color: var(--text); line-height: 1.8; font-size: 1.25rem; margin: 28px 0; padding-left: 28px; border-left: 4px solid var(--cyan); }
+.cred-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 28px; }
+@media(max-width:768px){ .cred-row { justify-content: center; } }
+.cred { padding: 10px 22px; border-radius: 50px; background: rgba(0,0,0,0.5); border: 1px solid var(--border); font-size: 0.95rem; color: var(--white); font-weight: 600; }
+
+/* ── PRICING ── */
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-top: 40px; }
+.price-wrap { position: relative; padding-top: 20px; }
+.price-badge { position: absolute; top: 0; left: 50%; transform: translateX(-50%); padding: 10px 28px; background: linear-gradient(135deg, var(--cyan), #7B9FFF); border-radius: 50px; font-size: 0.9rem; font-weight: 800; color: #000; font-family: var(--font-h); white-space: nowrap; box-shadow: 0 15px 30px rgba(0,0,0,0.5); text-transform: uppercase; letter-spacing: 1.5px; z-index: 20; }
+.price-card { height: 100%; } 
+.price-featured { border-color: var(--cyan) !important; box-shadow: 0 0 60px rgba(0,212,255,0.25); }
+.price-amount { font-family: var(--font-h); font-weight: 800; font-size: 3.8rem; color: var(--white); margin: 18px 0; line-height: 1; }
+.price-amount span { font-size: 1.2rem; color: var(--muted); font-weight: 600; }
+.check-item { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 16px; font-size: 1.05rem; }
+.check-icon { color: var(--cyan); flex-shrink: 0; margin-top: 2px; font-weight: 900; }
+
+/* ── FINAL CTA ── */
+#final-cta { position: relative; overflow: hidden; padding: 180px 24px; }
+.cta-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 1000px; height: 1000px; background: radial-gradient(circle, rgba(0,212,255,0.15) 0%, transparent 60%); pointer-events: none; }
+
+/* ── FOOTER ── */
+footer { background: #010204; border-top: 1px solid rgba(255,255,255,0.05); padding: 100px 24px 40px; position: relative; z-index: 2; }
+.footer-top { display: grid; grid-template-columns: 1fr auto auto; gap: 80px; margin-bottom: 80px; align-items: start; }
+@media(max-width:900px){ .footer-top { grid-template-columns: 1fr; gap: 50px; } }
+.footer-about p { color: var(--muted); font-size: 1rem; line-height: 1.8; margin-top: 18px; max-width: 340px; }
+.footer-col-title { font-family: var(--font-h); font-weight: 800; color: var(--white); font-size: 1.1rem; margin-bottom: 24px; letter-spacing: 1px; text-transform: uppercase; }
+.footer-links { display: flex; flex-direction: column; gap: 16px; }
+.footer-link { color: var(--muted); text-decoration: none; font-size: 1rem; transition: color 0.2s; font-weight: 600; }
+.footer-link:hover { color: var(--cyan); }
+.contact-item { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.contact-icon { color: var(--cyan); font-size: 1.2rem; flex-shrink: 0; }
+.contact-text { color: var(--muted); font-size: 1rem; font-weight: 600; }
+.contact-text a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.contact-text a:hover { color: var(--cyan); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+.footer-copy { color: var(--muted); font-size: 0.95rem; }
+.trust-badges { display: flex; gap: 14px; flex-wrap: wrap; }
+.trust-badge { padding: 8px 18px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 50px; font-size: 0.9rem; color: var(--text); font-weight: 700; }
+.social-link { color: var(--muted); transition: color 0.3s; display: inline-flex; }
+.social-link:hover { color: var(--cyan); transform: translateY(-2px); }
+
+/* Animation Base Classes */
+.fade-up { opacity: 0; transform: translateY(30px); }
 </style>
 </head>
 <body>
 
-<!-- ── NAVBAR ─────────────────────────────────────────────────────────────── -->
+<div id="preloader">
+  <div id="preloader-text">000%</div>
+  <div class="preloader-bar"><div id="preloader-fill"></div></div>
+</div>
+
+<canvas id="neural-canvas"></canvas>
+<div class="aurora-bg">
+  <div class="aurora-orb aurora-1"></div>
+  <div class="aurora-orb aurora-2"></div>
+</div>
+<div class="film-grain"></div>
+<div class="vignette"></div>
+
+<div id="cursor-glow"></div>
+<div id="cursor-ring"></div>
+<div id="cursor-dot"></div>
+
 <nav id="navbar">
   <div class="nav-inner">
-    <a href="/" class="logo">
-      <div class="logo-icon">
-        <svg width="19" height="19" viewBox="0 0 20 20" fill="none"><path d="M3 10h4l2-6 4 12 2-6h2" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
+    <a href="/" class="logo magnetic-wrap">
+      <div class="logo-icon"><svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M3 10h4l2-6 4 12 2-6h2" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <span class="logo-text">FlowwayAI</span>
     </a>
+    
     <div class="nav-links">
-      <a href="#how-it-works" class="nav-link">How It Works</a>
-      <a href="#results" class="nav-link">Results</a>
-      <a href="#pricing" class="nav-link">Pricing</a>
-      <a href="#founder" class="nav-link">About</a>
-      <a href="https://calendly.com/ankit-kambodi/15-minutes-meeting" target="_blank" class="btn-primary" style="padding:10px 22px;font-size:.85rem">Book Free Audit →</a>
+      <a href="#how-it-works" class="nav-link hover-link">How It Works</a>
+      <a href="#results" class="nav-link hover-link">Results</a>
+      <a href="#pricing" class="nav-link hover-link">Pricing</a>
+      <a href="#founder" class="nav-link hover-link">About Us</a>
+      <a href="https://calendly.com/ankit-kambodi/15-minutes-meeting" target="_blank" class="btn-primary magnetic-wrap" style="padding:14px 28px;font-size:.95rem">Book Free Audit →</a>
     </div>
+
+    <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Menu">
+      <span id="line1"></span>
+      <span id="line2"></span>
+      <span id="line3"></span>
+    </button>
   </div>
 </nav>
 
-<!-- ── HERO ───────────────────────────────────────────────────────────────── -->
-<section id="hero">
-  <div class="grid-bg">
-    <svg xmlns="http://www.w3.org/2000/svg" style="opacity:.14">
-      <defs>
-        <pattern id="g" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M60 0L0 0 0 60" fill="none" stroke="rgba(0,212,255,.5)" stroke-width=".5"/></pattern>
-        <radialGradient id="gf" cx="50%" cy="40%" r="55%"><stop offset="0%" stop-color="white"/><stop offset="100%" stop-color="white" stop-opacity="0"/></radialGradient>
-        <mask id="gm"><rect width="100%" height="100%" fill="url(#gf)"/></mask>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#g)" mask="url(#gm)"/>
-    </svg>
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-  </div>
+<div id="mobile-menu">
+  <a href="#how-it-works" class="mobile-menu-link">How It Works</a>
+  <a href="#results" class="mobile-menu-link">Results</a>
+  <a href="#pricing" class="mobile-menu-link">Pricing</a>
+  <a href="#founder" class="mobile-menu-link">About Us</a>
+  <a href="https://calendly.com/ankit-kambodi/15-minutes-meeting" target="_blank" class="btn-primary" style="margin-top:20px; font-size: 1.2rem; padding: 20px 40px;">Book Audit Call →</a>
+</div>
 
-  <div class="container text-center" style="position:relative;z-index:1">
-    <div class="hero-badge" style="display:inline-flex;margin-bottom:28px">
+<section id="hero">
+  <div class="container text-center hero-content" id="hero-content">
+    <div class="hero-badge fade-up">
       <span class="dot"></span>
       <span>Serving USA · UK · Australia · Poland · Europe</span>
     </div>
 
-    <h1 style="animation:fadeUp .7s ease both">
-      Stop Losing Leads<br><span class="grad">While You Sleep.</span>
+    <h1 class="fade-up">
+      Stop Losing Leads<br>
+      <span class="hero-grad">While You Sleep.</span>
     </h1>
 
-    <p class="body-lg" style="max-width:560px;margin:0 auto 36px;color:var(--muted);animation:fadeUp .7s .1s ease both">
-      I build complete AI automation systems for coaches, consultants, and agencies —
+    <p class="body-lg fade-up" style="max-width:680px;margin:0 auto 40px;">
+      We build complete AI automation systems for coaches, consultants, and agencies —
       so your business follows up, books calls, and closes deals on autopilot.
     </p>
 
-    <div class="flex-center" style="animation:fadeUp .7s .2s ease both">
-      <button class="btn-primary" onclick="document.getElementById('tool').scrollIntoView({behavior:'smooth'})">
-        ⚡ Get My Free Blueprint
+    <div class="flex-center fade-up">
+      <button class="btn-primary magnetic-wrap" onclick="document.getElementById('tool').scrollIntoView({behavior:'smooth'})">
+        ⚡ Get Our Free Blueprint
       </button>
-      <a href="https://calendly.com/ankit-kambodi/15-minutes-meeting" target="_blank" class="btn-secondary">
+      <a href="https://calendly.com/ankit-kambodi/15-minutes-meeting" target="_blank" class="btn-secondary magnetic-wrap">
         Book Free 15-Min Audit →
       </a>
     </div>
 
-    <div class="hero-stats" style="animation:fadeUp .7s .3s ease both">
+    <div class="hero-stats fade-up">
       <div class="hero-stat"><div class="num">10–15<span class="unit"> hrs</span></div><div class="lbl">Saved per week</div></div>
       <div class="hero-stat"><div class="num">$8K<span class="unit">/mo</span></div><div class="lbl">Revenue recovered</div></div>
       <div class="hero-stat"><div class="num">60s<span class="unit"> reply</span></div><div class="lbl">Lead response time</div></div>
       <div class="hero-stat"><div class="num">7<span class="unit"> days</span></div><div class="lbl">Delivery time</div></div>
     </div>
 
-    <div class="tools-row" style="animation:fadeUp .7s .4s ease both">
-      <div style="width:100%;color:var(--muted);font-size:.75rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">Tools I use to build your system</div>
-      <span class="tool-badge">Make.com</span><span class="tool-badge">Zapier</span><span class="tool-badge">Manychat</span>
-      <span class="tool-badge">n8n</span><span class="tool-badge">Airtable</span><span class="tool-badge">Claude AI</span>
-      <span class="tool-badge">Calendly</span><span class="tool-badge">Notion</span><span class="tool-badge">Brevo</span>
+    <div class="tech-stack-container fade-up" id="tech-stack">
+      <div class="tech-header">TOOLS WE USE TO BUILD YOUR SYSTEM</div>
+      <div class="tools-row">
+        <span class="tool-badge magnetic-wrap form-ignore">Make.com</span>
+        <span class="tool-badge magnetic-wrap form-ignore">Zapier</span>
+        <span class="tool-badge magnetic-wrap form-ignore">Manychat</span>
+        <span class="tool-badge magnetic-wrap form-ignore">n8n</span>
+        <span class="tool-badge magnetic-wrap form-ignore">Airtable</span>
+        <span class="tool-badge magnetic-wrap form-ignore">Claude AI</span>
+        <span class="tool-badge magnetic-wrap form-ignore">Calendly</span>
+        <span class="tool-badge magnetic-wrap form-ignore">Notion</span>
+        <span class="tool-badge magnetic-wrap form-ignore">Brevo</span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ── PAIN ───────────────────────────────────────────────────────────────── -->
-<section id="pain" class="section fade-up">
+<div class="marquee-wrapper">
+  <div class="marquee" id="marquee-text">
+    <span>✦ RUN ON AUTOPILOT</span><span>✦ NO MORE MANUAL WORK</span><span>✦ CLOSE DEALS WHILE YOU SLEEP</span><span>✦ SCALE WITHOUT HEADCOUNT</span>
+    <span>✦ RUN ON AUTOPILOT</span><span>✦ NO MORE MANUAL WORK</span><span>✦ CLOSE DEALS WHILE YOU SLEEP</span><span>✦ SCALE WITHOUT HEADCOUNT</span>
+  </div>
+</div>
+
+<section id="pain" class="section color-shift-trigger" data-color="#120505">
   <div class="container">
-    <div class="text-center" style="margin-bottom:44px">
+    <div class="text-center fade-up" style="margin-bottom:80px">
       <span class="overline">The Problem</span>
       <h2>Your business is leaking revenue<br><span class="grad">every single day</span></h2>
     </div>
     <div class="grid-3">
-      <div class="card pain-card fade-up">
+      <div class="card pain-card spotlight-card hover-explore fade-up">
         <div class="pain-icon">📨</div>
         <h3>Leads go cold in hours</h3>
-        <p class="muted">You get an inquiry at 2pm. You reply at 6pm. They already hired someone else. This happens every week — and you don't even know it.</p>
+        <p class="muted">You get an inquiry at 2pm. We reply at 6pm. They already hired someone else. This happens every week — and you don't even know it.</p>
       </div>
-      <div class="card pain-card fade-up">
+      <div class="card pain-card spotlight-card hover-explore fade-up">
         <div class="pain-icon">📋</div>
         <h3>Hours lost to manual tasks</h3>
         <p class="muted">Copy-pasting data. Sending the same emails. Updating spreadsheets. 4+ hours a week doing work that AI can do in 4 minutes.</p>
       </div>
-      <div class="card pain-card fade-up">
+      <div class="card pain-card spotlight-card hover-explore fade-up">
         <div class="pain-icon">📅</div>
         <h3>Empty calendar, full to-do list</h3>
         <p class="muted">You're always busy but never booked. Chasing leads manually while your competitors run on autopilot and fill their calendar effortlessly.</p>
@@ -299,23 +386,24 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:48px 24px
   </div>
 </section>
 
-<!-- ── BLUEPRINT TOOL ─────────────────────────────────────────────────────── -->
-<section id="tool">
+<section id="tool" class="section color-shift-trigger" data-color="#02050A">
   <div class="container">
-    <div class="text-center" style="margin-bottom:48px">
-      <span class="overline">Free Tool</span>
-      <h2>Get your <span class="grad">AI Blueprint</span> in 60 seconds</h2>
-      <p class="muted" style="max-width:480px;margin:0 auto">
+    <div class="text-center fade-up" style="margin-bottom:60px">
+      <span class="overline">Interactive Logic</span>
+      <h2 style="font-size:clamp(2.8rem, 6vw, 4.5rem); margin-bottom: 20px; letter-spacing: -1.5px; line-height: 1.2;">
+        Get your <span class="highlight-block">AI Blueprint</span> in 60 seconds
+      </h2>
+      <p class="muted" style="max-width:550px;margin:0 auto; font-size: 1.15rem;">
         Describe your business. Get a complete, personalised automation workflow — free, instant, no email required.
       </p>
     </div>
 
-    <div class="tool-wrap">
-      <!-- Form -->
-      <div class="glass" id="blueprint-form">
+    <div class="tool-wrap fade-up">
+      <div class="blueprint-container" id="blueprint-form">
+        <div class="laser-scan" id="laser-scan"></div>
         <div class="form-group">
           <label class="form-label">What type of business do you run? *</label>
-          <select id="biz-type">
+          <select id="biz-type" class="form-input">
             <option value="">Select your business type...</option>
             <option>Online Coach / Consultant</option>
             <option>Marketing Agency</option>
@@ -329,7 +417,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:48px 24px
         </div>
         <div class="form-group">
           <label class="form-label">Team size</label>
-          <select id="team-size">
+          <select id="team-size" class="form-input">
             <option value="">Select team size...</option>
             <option>Just me (solopreneur)</option>
             <option>2–5 people</option>
@@ -339,161 +427,164 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:48px 24px
         </div>
         <div class="form-group">
           <label class="form-label">What is your biggest weekly time-waster? *</label>
-          <textarea id="timewaster" placeholder="e.g. I spend 3 hours every week manually following up with leads who filled in my contact form but never booked a call..."></textarea>
+          <textarea id="timewaster" class="form-input" placeholder="e.g. We spend 3 hours every week manually following up with leads who filled in our contact form but never booked a call..."></textarea>
         </div>
         <div class="form-group">
           <label class="form-label">What tools do you currently use? (optional)</label>
-          <input type="text" id="current-tools" placeholder="e.g. Gmail, Calendly, WhatsApp, Notion..."/>
+          <input type="text" id="current-tools" class="form-input" placeholder="e.g. Gmail, Calendly, WhatsApp, Notion..."/>
         </div>
         <p class="error-msg" id="form-error" style="display:none"></p>
-        <button class="btn-primary" id="generate-btn" onclick="generateBlueprint()" style="width:100%;justify-content:center;font-size:1rem;padding:15px">
-          ⚡ Generate My Free Blueprint
+        <button class="btn-primary magnetic-wrap form-input" id="generate-btn" onclick="generateBlueprint()" style="width:100%;justify-content:center;font-size:1.15rem;padding:22px; margin-top:10px;">
+          ⚡ Generate Our Free Blueprint
         </button>
-        <p class="muted text-center" style="margin-top:10px;font-size:.78rem">No email required · Instant results · Powered by Claude AI</p>
+        <p class="muted text-center" style="margin-top:15px;font-size:.9rem">No email required · Instant results · Powered by Claude AI</p>
       </div>
 
-      <!-- Result -->
       <div id="blueprint-result">
         <div class="bp-header">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px">
             <div>
-              <span class="overline" style="margin-bottom:6px">Your AI Blueprint</span>
-              <h3 id="bp-name" style="font-size:1.3rem;margin-bottom:6px"></h3>
-              <p id="bp-problem" class="muted" style="font-size:.88rem"></p>
+              <span class="overline" style="margin-bottom:8px">Your AI Blueprint</span>
+              <h3 id="bp-name" style="font-size:1.8rem;margin-bottom:8px;color:#fff;"></h3>
+              <p id="bp-problem" class="muted" style="font-size:1rem; max-width:500px;"></p>
             </div>
-            <div style="display:flex;gap:10px;flex-wrap:wrap">
-              <div class="stat-box"><div class="stat-val" id="bp-time" style="color:var(--cyan)"></div><div class="muted" style="font-size:.72rem">saved/week</div></div>
-              <div class="stat-box"><div class="stat-val" id="bp-money" style="color:var(--green)"></div><div class="muted" style="font-size:.72rem">recovered/mo</div></div>
-              <div class="stat-box"><div class="stat-val" id="bp-diff"></div><div class="muted" style="font-size:.72rem">to implement</div></div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <div class="stat-box"><div class="stat-val" id="bp-time" style="color:var(--cyan)"></div><div class="muted" style="font-size:.85rem">saved/week</div></div>
+              <div class="stat-box"><div class="stat-val" id="bp-money" style="color:var(--green)"></div><div class="muted" style="font-size:.85rem">recovered/mo</div></div>
+              <div class="stat-box"><div class="stat-val" id="bp-diff"></div><div class="muted" style="font-size:.85rem">to implement</div></div>
             </div>
           </div>
         </div>
 
         <div class="bp-steps">
-          <span class="overline" style="margin-bottom:20px">Your 5-Step Automation Workflow</span>
+          <span class="overline" style="margin-bottom:25px">Your 5-Step Automation Workflow</span>
           <div id="bp-steps-list"></div>
         </div>
 
         <div class="bp-win">
-          <div style="display:flex;gap:10px;align-items:flex-start">
-            <span style="font-size:1.3rem">⚡</span>
+          <div style="display:flex;gap:15px;align-items:flex-start">
+            <span style="font-size:2rem">⚡</span>
             <div>
-              <p style="color:var(--orange);font-weight:600;font-size:.82rem;margin-bottom:5px;font-family:var(--font-h)">YOUR QUICK WIN — Start here this week</p>
-              <p id="bp-quickwin" style="color:var(--text);font-size:.9rem"></p>
+              <p style="color:var(--orange);font-weight:800;font-size:1rem;margin-bottom:8px;font-family:var(--font-h)">YOUR QUICK WIN — Start here this week</p>
+              <p id="bp-quickwin" style="color:var(--text);font-size:1.05rem; line-height: 1.6;"></p>
             </div>
           </div>
         </div>
 
-        <!-- Self-build reality check -->
-        <div class="selfbuild">
+        <div class="selfbuild hover-explore">
           <p class="selfbuild-title">⚠️ Can you build this yourself?</p>
-          <p class="muted" style="font-size:.86rem;margin-bottom:12px">Technically yes. But here's what it actually takes:</p>
-          <div class="selfbuild-row"><span style="color:var(--orange);font-size:.85rem">✗</span><span class="muted" style="font-size:.84rem">3–6 weeks learning Make.com, Manychat, API connections</span></div>
-          <div class="selfbuild-row"><span style="color:var(--orange);font-size:.85rem">✗</span><span class="muted" style="font-size:.84rem">20–40 hours of setup, testing, debugging, and fixing</span></div>
-          <div class="selfbuild-row"><span style="color:var(--orange);font-size:.85rem">✗</span><span class="muted" style="font-size:.84rem">Ongoing maintenance when tools update or break</span></div>
-          <div class="selfbuild-row" style="margin-top:8px"><span style="color:var(--green);font-size:.85rem">✓</span><span class="muted" style="font-size:.84rem"><strong style="color:var(--white)">Or:</strong> I build it for you in 7 days. You focus on your clients.</span></div>
+          <p class="muted" style="font-size:1rem;margin-bottom:18px">Technically yes. But here's what it actually takes:</p>
+          <div class="selfbuild-row"><span style="color:var(--orange);font-size:1.2rem;font-weight:900;">✗</span><span class="muted" style="font-size:1rem">3–6 weeks learning Make.com, Manychat, API connections</span></div>
+          <div class="selfbuild-row"><span style="color:var(--orange);font-size:1.2rem;font-weight:900;">✗</span><span class="muted" style="font-size:1rem">20–40 hours of setup, testing, debugging, and fixing</span></div>
+          <div class="selfbuild-row"><span style="color:var(--orange);font-size:1.2rem;font-weight:900;">✗</span><span class="muted" style="font-size:1rem">Ongoing maintenance when tools update or break</span></div>
+          <div class="selfbuild-row" style="margin-top:15px"><span style="color:var(--green);font-size:1.3rem;font-weight:900;">✓</span><span class="muted" style="font-size:1.05rem"><strong style="color:var(--white)">Or:</strong> We build it for you in 7 days. You focus on your clients.</span></div>
         </div>
 
         <div class="bp-cta">
-          <p style="color:var(--white);font-family:var(--font-h);font-weight:700;font-size:1.05rem;margin-bottom:8px">Want me to build this exact system for you?</p>
-          <p class="muted" style="font-size:.88rem;margin-bottom:22px">Book a free 15-min audit. I'll map your workflow and show you exactly what I'd build. Zero pressure.</p>
-          <a href="https://calendly.com/ankit-flowwayai/15min" target="_blank" class="btn-primary" style="margin:0 auto">
-            📅 Book My Free Audit Call →
+          <p style="color:var(--white);font-family:var(--font-h);font-weight:800;font-size:1.4rem;margin-bottom:12px">Want us to build this exact system for you?</p>
+          <p class="muted" style="font-size:1.05rem;margin-bottom:30px">Book a free 15-min audit. We'll map your workflow and show you exactly what we'd build. Zero pressure.</p>
+          <a href="https://calendly.com/ankit-kambodi/15-minutes-meeting" target="_blank" class="btn-primary magnetic-wrap" style="margin:0 auto; font-size:1.15rem; padding: 20px 42px;">
+            📅 Book Our Free Audit Call →
           </a>
-          <p class="muted" style="margin-top:12px;font-size:.76rem">Response within 10 minutes · I take on 3 projects/month · 1 spot currently open</p>
+          <p class="muted" style="margin-top:20px;font-size:.9rem">Response within 10 minutes · We take on 3 projects/month · 1 spot currently open</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── RESULTS ─────────────────────────────────────────────────────────────── -->
-<section id="results" class="section">
+<section id="results" class="section color-shift-trigger" data-color="#040811">
   <div class="container">
-    <div class="text-center" style="margin-bottom:48px">
+    <div class="text-center fade-up" style="margin-bottom:80px">
       <span class="overline">Client Results</span>
       <h2>Real businesses. <span class="grad">Real results.</span></h2>
-      <p class="muted" style="max-width:440px;margin:0 auto">Actual outcomes from automation systems I've built.</p>
+      <p class="muted" style="max-width:440px;margin:0 auto">Actual outcomes from automation systems we've built.</p>
     </div>
     <div class="grid-3">
-      <div class="card result-card fade-up" style="border-top-color:var(--cyan)">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
-          <span class="muted" style="font-size:.78rem">🇬🇧 UK · Marketing Agency</span>
+      <div class="card result-card spotlight-card hover-explore fade-up" style="border-top-color:var(--cyan)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+          <span class="muted" style="font-size:.9rem">🇬🇧 UK · Marketing Agency</span>
           <span class="result-stat" style="background:rgba(0,212,255,.1);color:var(--cyan)">4 hrs → 4 min</span>
         </div>
-        <h3>Client onboarding: 4 hours → 4 minutes</h3>
-        <p class="muted" style="margin-top:8px">40 hours/month saved. Team now onboards 3× more clients with zero additional headcount.</p>
+        <h3 style="font-size: 1.6rem;">Client onboarding: 4 hours → 4 minutes</h3>
+        <p class="muted" style="margin-top:12px">40 hours/month saved. Team now onboards 3× more clients with zero additional headcount.</p>
       </div>
-      <div class="card result-card fade-up" style="border-top-color:var(--green)">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
-          <span class="muted" style="font-size:.78rem">🇺🇸 USA · Online Coach</span>
+      <div class="card result-card spotlight-card hover-explore fade-up" style="border-top-color:var(--green)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+          <span class="muted" style="font-size:.9rem">🇺🇸 USA · Online Coach</span>
           <span class="result-stat" style="background:rgba(34,197,94,.1);color:var(--green)">$34K closed</span>
         </div>
-        <h3>11 qualified calls booked in Month 1</h3>
-        <p class="muted" style="margin-top:8px">Zero manual follow-ups. Calendar filled automatically. Closed $34,000 in her first month on autopilot.</p>
+        <h3 style="font-size: 1.6rem;">11 qualified calls booked in Month 1</h3>
+        <p class="muted" style="margin-top:12px">Zero manual follow-ups. Calendar filled automatically. Closed $34,000 in her first month on autopilot.</p>
       </div>
-      <div class="card result-card fade-up" style="border-top-color:var(--orange)">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
-          <span class="muted" style="font-size:.78rem">🌍 Export · Trade Business</span>
+      <div class="card result-card spotlight-card hover-explore fade-up" style="border-top-color:var(--orange)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+          <span class="muted" style="font-size:.9rem">🌍 Export · Trade Business</span>
           <span class="result-stat" style="background:rgba(255,107,53,.1);color:var(--orange)">+40% responses</span>
         </div>
-        <h3>40% more buyer responses in 2 weeks</h3>
-        <p class="muted" style="margin-top:8px">Automated follow-up sequence for 50 global buyers. Response rate jumped from 18% to 40% within 2 weeks.</p>
+        <h3 style="font-size: 1.6rem;">40% more buyer responses in 2 weeks</h3>
+        <p class="muted" style="margin-top:12px">Automated follow-up sequence for 50 global buyers. Response rate jumped from 18% to 40% within 2 weeks.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── HOW IT WORKS ───────────────────────────────────────────────────────── -->
-<section id="how-it-works" class="section">
-  <div class="container">
-    <div class="text-center" style="margin-bottom:56px">
-      <span class="overline">The Process</span>
-      <h2>From chaos to autopilot <span class="grad">in 7 days</span></h2>
-    </div>
-    <div class="grid-3">
-      <div class="fade-up">
+<section id="how-it-works" class="section color-shift-trigger" data-color="#0A1120" style="padding-bottom: 0;">
+  <div class="container text-center fade-up" style="margin-bottom:60px">
+    <span class="overline">The Process</span>
+    <h2>From chaos to autopilot <span class="grad">in 7 days</span></h2>
+  </div>
+  
+  <div class="horizontal-wrap fade-up" id="horizontal-section">
+    <div class="horizontal-container" id="horizontal-container">
+      <div class="card horizontal-item spotlight-card hover-explore">
         <div class="step-big-num">01</div>
-        <h3>Free 15-Min Audit</h3>
-        <p class="muted">We map your workflow together. I show exactly where you're losing time and money. Zero pressure. Zero cost. You'll leave with clarity even if you don't hire me.</p>
+        <h3 style="font-size:1.9rem;">Free 15-Min Audit</h3>
+        <p class="muted">We map your workflow together. We show exactly where you're losing time and money. Zero pressure. Zero cost. You'll leave with clarity even if you don't hire us.</p>
       </div>
-      <div class="fade-up">
+      <div class="card horizontal-item spotlight-card hover-explore">
         <div class="step-big-num">02</div>
-        <h3>I Build Your System</h3>
-        <p class="muted">In 7 days I build your complete AI automation system — tested, connected, live. Every tool configured. Every sequence running. You approve before going live.</p>
+        <h3 style="font-size:1.9rem;">We Build Your System</h3>
+        <p class="muted">In 7 days we build your complete AI automation system — tested, connected, live. Every tool configured. Every sequence running. You approve before going live.</p>
       </div>
-      <div class="fade-up">
+      <div class="card horizontal-item spotlight-card hover-explore">
         <div class="step-big-num">03</div>
-        <h3>Your Business Runs Itself</h3>
+        <h3 style="font-size:1.9rem;">Business Runs Itself</h3>
         <p class="muted">Leads get instant replies. Calls get booked. Your CRM updates itself. You get back 10–15 hours every week — to focus on work only you can do.</p>
       </div>
     </div>
-    <div class="text-center" style="margin-top:52px">
-      <a href="https://calendly.com/ankit-flowwayai/15min" target="_blank" class="btn-primary">Start With a Free Audit →</a>
-      <p class="muted" style="margin-top:10px;font-size:.78rem">10-minute response guaranteed · 3 project spots per month · 1 currently open</p>
-    </div>
+  </div>
+
+  <div class="container text-center fade-up" style="margin-top:70px; padding-bottom:120px;">
+    <a href="https://calendly.com/ankit-kambodi/15-minutes-meeting" target="_blank" class="btn-primary magnetic-wrap" style="padding: 20px 44px; font-size: 1.15rem;">Start With a Free Audit →</a>
+    <p class="muted" style="margin-top:15px;font-size:.9rem">10-minute response guaranteed · 3 project spots per month · 1 currently open</p>
   </div>
 </section>
 
-<!-- ── FOUNDER ─────────────────────────────────────────────────────────────── -->
-<section id="founder" class="section">
+<section id="founder" class="section color-shift-trigger" data-color="#02050A">
   <div class="container">
-    <div class="text-center" style="margin-bottom:44px">
-      <span class="overline">About the Founder</span>
-      <h2>Why I build <span class="grad">better automations</span></h2>
+    <div class="text-center fade-up" style="margin-bottom:60px">
+      <span class="overline">About the Architects</span>
+      <h2>Why we build <span class="grad">better automations</span></h2>
     </div>
-    <div class="founder-card fade-up">
+    <div class="founder-card fade-up hover-explore">
       <div>
         <div class="founder-avatar">AK</div>
       </div>
       <div>
-        <span class="founder-badge">Founder, FlowwayAI · Merchant Exporter · Rajkot, India</span>
-        <h3 style="margin-bottom:8px">Ankit Kambodi</h3>
-        <p class="muted">I'm not just an automation builder — I'm an active merchant exporter running Aeroway International from Rajkot, Gujarat. I export agricultural commodities to the UAE, EU, USA, and Southeast Asia every day.</p>
+        <span class="founder-badge">Our Founder · Merchant Exporter · Rajkot, India</span>
+        <h3 style="margin-bottom:12px; font-size: 2.4rem;">Ankit Kambodi</h3>
+        <p class="muted" style="font-size: 1.15rem;">At FlowwayAI, we're not just automation builders. Our founder, Ankit Kambodi, is an active merchant exporter running Aeroway International from Rajkot, Gujarat. We export agricultural commodities to the UAE, EU, USA, and Southeast Asia every day.</p>
         <blockquote class="founder-quote">
-          "I build the exact automations I use to run my own international business. Every system I create for you has been battle-tested in the real world of global trade and B2B client management — not just in theory."
+          "We build the exact automations we use to run our own international business. Every system we create for you has been battle-tested in the real world of global trade and B2B client management — not just in theory."
         </blockquote>
-        <p class="muted" style="font-size:.88rem">This means when I automate your lead follow-up or client onboarding, I understand what it actually feels like to lose a $10,000 buyer because nobody replied fast enough. I've lived that problem. Now I solve it.</p>
+        <p class="muted" style="font-size:1rem; margin-bottom: 24px;">This means when we automate your lead follow-up or client onboarding, we understand what it actually feels like to lose a $10,000 buyer because nobody replied fast enough. We've lived that problem. Now we solve it.</p>
+        
+        <a href="https://www.linkedin.com/in/ankit-kambodi/" target="_blank" class="btn-linkedin hover-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Connect with Ankit on LinkedIn
+        </a>
+        
         <div class="cred-row">
           <span class="cred">🎓 MTech — Adam Mickiewicz University, Poland</span>
           <span class="cred">🌍 Speaks: English · Hindi · Gujarati · Polish</span>
@@ -505,96 +596,100 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:48px 24px
   </div>
 </section>
 
-<!-- ── PRICING ─────────────────────────────────────────────────────────────── -->
-<section id="pricing" class="section">
+<section id="pricing" class="section color-shift-trigger" data-color="#0A1120">
   <div class="container">
-    <div class="text-center" style="margin-bottom:48px">
+    <div class="text-center fade-up" style="margin-bottom:80px">
       <span class="overline">Investment</span>
       <h2>One-time fee. <span class="grad">Lifetime autopilot.</span></h2>
-      <p class="muted" style="max-width:420px;margin:0 auto">Every system pays for itself within 30 days. Guaranteed or I fix it free.</p>
+      <p class="muted" style="max-width:440px;margin:0 auto">Every system pays for itself within 30 days. Guaranteed or we fix it free.</p>
     </div>
-    <div class="grid-3">
-      <div class="card price-card fade-up">
-        <p class="muted" style="font-size:.75rem;font-weight:500;margin-bottom:6px">Best Entry Point</p>
-        <h3>Starter Flow</h3>
-        <div class="price-amount">$199<span> one-time</span></div>
-        <p class="muted" style="font-size:.86rem;margin-bottom:20px">Perfect for solopreneurs who want their first automation running fast.</p>
-        <div style="border-top:1px solid var(--border);padding-top:18px;margin-bottom:22px">
-          <div class="check-item"><span class="check-icon">✓</span><span>1 complete automation workflow</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>WhatsApp or Email automation</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>CRM integration</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>7-day delivery</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>1 revision round + 14-day support</span></div>
+    
+    <div class="pricing-grid">
+      <div class="price-wrap fade-up">
+        <div class="card price-card spotlight-card hover-explore">
+          <p class="muted" style="font-size:.9rem;font-weight:700;margin-bottom:10px; text-transform:uppercase; letter-spacing:1px;">Best Entry Point</p>
+          <h3 style="font-size: 1.9rem;">Starter Flow</h3>
+          <div class="price-amount">$199<span> one-time</span></div>
+          <p class="muted" style="font-size:1rem;margin-bottom:30px">Perfect for solopreneurs who want their first automation running fast.</p>
+          <div style="border-top:1px solid var(--border);padding-top:24px;margin-bottom:36px">
+            <div class="check-item"><span class="check-icon">✓</span><span>1 complete automation workflow</span></div>
+            <div class="check-item"><span class="check-icon">✓</span><span>WhatsApp or Email automation</span></div>
+            <div class="check-item"><span class="check-icon">✓</span><span>CRM integration</span></div>
+            <div class="check-item"><span class="check-icon">✓</span><span>7-day delivery</span></div>
+            <div class="check-item"><span class="check-icon">✓</span><span>1 revision round + 14-day support</span></div>
+          </div>
+          <a href="https://calendly.com/ankit-kambodi/15-minutes-meeting" target="_blank" class="btn-secondary magnetic-wrap" style="width:100%;justify-content:center; padding: 20px;">Get Started →</a>
         </div>
-        <a href="https://calendly.com/ankit-flowwayai/15min" target="_blank" class="btn-secondary" style="width:100%;justify-content:center">Get Started →</a>
       </div>
 
-      <div class="card price-card price-featured fade-up">
+      <div class="price-wrap fade-up" style="transition-delay: 0.1s;">
         <div class="price-badge">⚡ Most Popular</div>
-        <h3 style="margin-top:10px">Growth Flow</h3>
-        <div class="price-amount">$549<span> one-time</span></div>
-        <p class="muted" style="font-size:.86rem;margin-bottom:20px">The complete lead-to-booked-call system. Most clients choose this.</p>
-        <div style="border-top:1px solid var(--border);padding-top:18px;margin-bottom:22px">
-          <div class="check-item"><span class="check-icon">✓</span><span>Full lead capture + qualification</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>WhatsApp + Email follow-up sequences</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>Calendar booking automation</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>CRM auto-update</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>7-day delivery + 2 revisions</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>30-day support</span></div>
+        <div class="card price-card price-featured spotlight-card hover-explore">
+          <h3 style="font-size: 1.9rem; margin-top:20px">Growth Flow</h3>
+          <div class="price-amount">$549<span> one-time</span></div>
+          <p class="muted" style="font-size:1rem;margin-bottom:30px">The complete lead-to-booked-call system. Most clients choose this.</p>
+          <div style="border-top:1px solid var(--border);padding-top:24px;margin-bottom:36px">
+            <div class="check-item"><span class="check-icon">✓</span><span>Full lead capture + qualification</span></div>
+            <div class="check-item"><span class="check-icon">✓</span><span>WhatsApp + Email follow-up sequences</span></div>
+            <div class="check-item"><span class="check-icon">✓</span><span>Calendar booking automation</span></div>
+            <div class="check-item"><span class="check-icon">✓</span><span>CRM auto-update</span></div>
+            <div class="check-item"><span class="check-icon">✓</span><span>7-day delivery + 2 revisions</span></div>
+            <div class="check-item"><span class="check-icon">✓</span><span>30-day support</span></div>
+          </div>
+          <a href="https://calendly.com/ankit-kambodi/15-minutes-meeting" target="_blank" class="btn-primary magnetic-wrap" style="width:100%;justify-content:center; padding: 20px;">Get Growth Flow →</a>
         </div>
-        <a href="https://calendly.com/ankit-flowwayai/15min" target="_blank" class="btn-primary" style="width:100%;justify-content:center">Get Growth Flow →</a>
       </div>
 
-      <div class="card price-card fade-up">
-        <p class="muted" style="font-size:.75rem;font-weight:500;margin-bottom:6px">Maximum Impact</p>
-        <h3>Scale Flow</h3>
-        <div class="price-amount">$1,100<span> one-time</span></div>
-        <p class="muted" style="font-size:.86rem;margin-bottom:20px">Full business automation suite for agencies and growing teams.</p>
-        <div style="border-top:1px solid var(--border);padding-top:18px;margin-bottom:22px">
-          <div class="check-item"><span class="check-icon">✓</span><span>Everything in Growth Flow</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>Multi-channel automation</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>Team workflow setup</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>Weekly performance reports</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>Priority delivery + unlimited revisions</span></div>
-          <div class="check-item"><span class="check-icon">✓</span><span>60-day support</span></div>
+      <div class="price-wrap fade-up" style="transition-delay: 0.2s;">
+        <div class="card price-card spotlight-card hover-explore">
+          <p class="muted" style="font-size:.9rem;font-weight:700;margin-bottom:10px; text-transform:uppercase; letter-spacing:1px;">Maximum Impact</p>
+          <h3 style="font-size: 1.9rem;">Scale Flow</h3>
+          <div class="price-amount">$1,100<span> one-time</span></div>
+          <p class="muted" style="font-size:1rem;margin-bottom:30px">Full business automation suite for agencies and growing teams.</p>
+          <div style="border-top:1px solid var(--border);padding-top:24px;margin-bottom:36px">
+            <div class="check-item"><span class="check-icon">✓</span><span>Everything in Growth Flow</span></div>
+            <div class="check-item"><span class="check-icon">✓</span><span>Multi-channel automation</span></div>
+            <div class="check-item"><span class="check-icon">✓</span><span>Team workflow setup</span></div>
+            <div class="check-item"><span class="check-icon">✓</span><span>Weekly performance reports</span></div>
+            <div class="check-item"><span class="check-icon">✓</span><span>Priority delivery + unlimited revisions</span></div>
+            <div class="check-item"><span class="check-icon">✓</span><span>60-day support</span></div>
+          </div>
+          <a href="https://calendly.com/ankit-kambodi/15-minutes-meeting" target="_blank" class="btn-secondary magnetic-wrap" style="width:100%;justify-content:center; padding: 20px;">Get Scale Flow →</a>
         </div>
-        <a href="https://calendly.com/ankit-flowwayai/15min" target="_blank" class="btn-secondary" style="width:100%;justify-content:center">Get Scale Flow →</a>
       </div>
     </div>
-    <p class="muted text-center" style="margin-top:28px;font-size:.8rem">Not sure which plan? The free audit call helps you decide. No pressure, ever.</p>
+    <p class="muted text-center fade-up" style="margin-top:50px;font-size:1rem">Not sure which plan? The free audit call helps you decide. No pressure, ever.</p>
   </div>
 </section>
 
-<!-- ── FINAL CTA ───────────────────────────────────────────────────────────── -->
-<section id="final-cta" class="section">
+<section id="final-cta" class="section color-shift-trigger" data-color="#02050A">
   <div class="cta-glow"></div>
-  <div class="container text-center" style="position:relative;z-index:1">
+  <div class="container text-center fade-up" style="position:relative;z-index:1">
     <span class="overline">Don't wait</span>
-    <h2 style="font-size:clamp(1.9rem,4.5vw,3rem);margin-bottom:14px">
-      Every day without automation<br><span class="grad">is revenue you're leaving behind.</span>
+    <h2 style="font-size:clamp(2.5rem,6vw,4.5rem);margin-bottom:24px; line-height: 1.05;">
+      Every day without automation<br><span class="grad">is revenue left behind.</span>
     </h2>
-    <p class="muted" style="max-width:460px;margin:0 auto 36px;font-size:1rem">
-      Message me right now. Tell me your biggest time-waster this week.<br>I will respond within 10 minutes.
+    <p class="muted" style="max-width:600px;margin:0 auto 40px;font-size:1.2rem">
+      Message us right now. Tell us your biggest time-waster this week.<br>We will respond within 10 minutes.
     </p>
     <div class="flex-center">
-      <a href="https://calendly.com/ankit-flowwayai/15min" target="_blank" class="btn-primary">📅 Book My Free 15-Min Audit →</a>
-      <a href="mailto:ankit@flowwayai.com" class="btn-secondary">Email Ankit Directly</a>
+      <a href="https://calendly.com/ankit-kambodi/15-minutes-meeting" target="_blank" class="btn-primary magnetic-wrap" style="padding: 22px 46px; font-size: 1.15rem;">📅 Book Our Free 15-Min Audit →</a>
+      <a href="mailto:ankit@flowwayai.com" class="btn-secondary magnetic-wrap" style="padding: 21px 44px; font-size: 1.15rem;">Email Us Directly</a>
     </div>
-    <p class="muted" style="margin-top:18px;font-size:.78rem">🔒 3 new client projects per month · 1 spot currently open · Response within 10 minutes</p>
+    <p class="muted" style="margin-top:30px;font-size:.95rem">🔒 We take on 3 new client projects per month · 1 spot currently open · Response within 10 minutes</p>
   </div>
 </section>
 
-<!-- ── FOOTER ──────────────────────────────────────────────────────────────── -->
 <footer>
-  <div class="footer-inner">
-    <div class="footer-top">
+  <div class="footer-inner container">
+    <div class="footer-top fade-up">
       <div class="footer-about">
-        <a href="/" class="logo" style="margin-bottom:12px;display:inline-flex">
-          <div class="logo-icon"><svg width="17" height="17" viewBox="0 0 20 20" fill="none"><path d="M3 10h4l2-6 4 12 2-6h2" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span class="logo-text" style="font-size:1rem">FlowwayAI</span>
+        <a href="/" class="logo" style="margin-bottom:18px;display:inline-flex">
+          <div class="logo-icon"><svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M3 10h4l2-6 4 12 2-6h2" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="logo-text" style="font-size:1.3rem">FlowwayAI</span>
         </a>
         <p>AI automation systems for coaches, consultants, and agencies. Built from Rajkot, India. Serving the world.</p>
-        <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+        <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
           <span class="trust-badge">🇮🇳 Rajkot, Gujarat</span>
           <span class="trust-badge">🌍 Global Clients</span>
           <span class="trust-badge">⚡ 7-Day Delivery</span>
@@ -604,12 +699,12 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:48px 24px
       <div>
         <p class="footer-col-title">Quick Links</p>
         <div class="footer-links">
-          <a href="#tool" class="footer-link">Free Blueprint Tool</a>
-          <a href="#results" class="footer-link">Client Results</a>
-          <a href="#how-it-works" class="footer-link">How It Works</a>
-          <a href="#pricing" class="footer-link">Pricing</a>
-          <a href="#founder" class="footer-link">About Ankit</a>
-          <a href="https://www.upwork.com/freelancers/~012f9466ce4898b977" target="_blank" class="footer-link">Hire on Upwork</a>
+          <a href="#tool" class="footer-link hover-link">Free Blueprint Tool</a>
+          <a href="#results" class="footer-link hover-link">Client Results</a>
+          <a href="#how-it-works" class="footer-link hover-link">How It Works</a>
+          <a href="#pricing" class="footer-link hover-link">Pricing</a>
+          <a href="#founder" class="footer-link hover-link">About Us</a>
+          <a href="https://www.upwork.com/freelancers/~012f9466ce4898b977" target="_blank" class="footer-link hover-link">Hire on Upwork</a>
         </div>
       </div>
 
@@ -617,60 +712,277 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:48px 24px
         <p class="footer-col-title">Contact</p>
         <div class="contact-item">
           <span class="contact-icon">📧</span>
-          <span class="contact-text"><a href="mailto:ankit@flowwayai.com">ankit@flowwayai.com</a></span>
+          <span class="contact-text"><a href="mailto:ankit@flowwayai.com" class="hover-link">ankit@flowwayai.com</a></span>
         </div>
         <div class="contact-item">
           <span class="contact-icon">📱</span>
-          <span class="contact-text"><a href="tel:+917990644569">+91 79906 44569</a></span>
+          <span class="contact-text"><a href="tel:+917990644569" class="hover-link">+91 79906 44569</a></span>
         </div>
         <div class="contact-item">
           <span class="contact-icon">📍</span>
           <span class="contact-text">Rajkot, Gujarat, India</span>
         </div>
-        <div class="contact-item">
-          <span class="contact-icon">🕐</span>
-          <span class="contact-text">Response within 10 minutes</span>
-        </div>
-        <a href="https://calendly.com/ankit-flowwayai/15min" target="_blank" class="btn-primary" style="margin-top:16px;padding:10px 20px;font-size:.82rem">
+        <a href="https://calendly.com/ankit-kambodi/15-minutes-meeting" target="_blank" class="btn-primary magnetic-wrap" style="margin-top:24px;padding:16px 32px;font-size:.95rem">
           📅 Book Free Audit
         </a>
       </div>
     </div>
 
-    <div class="footer-bottom">
-      <p class="footer-copy">© 2026 FlowwayAI · Ankit Kambodi · Rajkot, Gujarat, India · All rights reserved</p>
-      <div class="trust-badges">
+    <div class="footer-bottom fade-up">
+      <p class="footer-copy">© 2026 FlowwayAI · Rajkot, Gujarat, India</p>
+      
+      <div class="trust-badges" style="flex:1; justify-content:center; gap: 20px;">
         <span class="trust-badge">🎓 MTech AMU Poland</span>
         <span class="trust-badge">📦 IEC Certified</span>
         <span class="trust-badge">✅ APEDA Registered</span>
       </div>
+
+      <a href="https://www.linkedin.com/in/ankit-kambodi/" target="_blank" class="social-link hover-link" aria-label="LinkedIn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
     </div>
   </div>
 </footer>
 
-<!-- ── SCRIPTS ─────────────────────────────────────────────────────────────── -->
 <script>
-// Navbar scroll
-window.addEventListener('scroll',()=>{
-  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40)
-})
+// 1. NEURAL NETWORK CANVAS (God Mode Background)
+const canvas = document.getElementById('neural-canvas');
+const ctx = canvas.getContext('2d');
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+const particles = [];
+const particleCount = window.innerWidth > 768 ? 90 : 40;
 
-// Scroll animations
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})
-},{threshold:0.1})
-document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el))
+for(let i=0; i<particleCount; i++) {
+  particles.push({
+    x: Math.random() * width, y: Math.random() * height,
+    vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5,
+    radius: Math.random() * 2 + 1
+  });
+}
+function drawParticles() {
+  ctx.clearRect(0, 0, width, height);
+  for(let i=0; i<particles.length; i++) {
+    let p = particles[i];
+    p.x += p.vx; p.y += p.vy;
+    if(p.x < 0 || p.x > width) p.vx *= -1;
+    if(p.y < 0 || p.y > height) p.vy *= -1;
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0, 212, 255, 0.5)'; ctx.fill();
+    for(let j=i+1; j<particles.length; j++) {
+      let p2 = particles[j];
+      let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+      if(dist < 120) {
+        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y);
+        ctx.strokeStyle = `rgba(0, 212, 255, ${1 - dist/120})`;
+        ctx.lineWidth = 0.5; ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+window.addEventListener('resize', () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; });
 
-// Blueprint Generator
+// 2. CINEMATIC PRELOADER
+const preloader = document.getElementById('preloader');
+const preloaderText = document.getElementById('preloader-text');
+const preloaderFill = document.getElementById('preloader-fill');
+let progress = 0;
+document.body.style.overflow = 'hidden';
+
+const updateProgress = setInterval(() => {
+  progress += Math.floor(Math.random() * 15) + 5;
+  if (progress >= 100) {
+    progress = 100;
+    clearInterval(updateProgress);
+    preloaderText.innerText = '100%';
+    preloaderFill.style.width = '100%';
+    
+    gsap.to(preloaderText, { scale: 1.2, opacity: 0, duration: 0.5, ease: "power2.in" });
+    gsap.to(preloader, { yPercent: -100, duration: 1, ease: "expo.inOut", delay: 0.3, onComplete: () => {
+      document.body.style.overflow = ''; 
+      initSiteAnimations();
+    }});
+    gsap.to('#navbar', { autoAlpha: 1, duration: 1, delay: 0.8 });
+  } else {
+    preloaderText.innerText = progress + '%';
+    preloaderFill.style.width = progress + '%';
+  }
+}, 100);
+
+setTimeout(() => { if(progress < 100) progress = 100; }, 3000); // Failsafe
+
+// 3. LENIS SMOOTH SCROLL (With Mobile Fix)
+const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true, syncTouch: true });
+gsap.registerPlugin(ScrollTrigger);
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time)=>{ lenis.raf(time * 1000); });
+gsap.ticker.lagSmoothing(0, 0);
+
+// 4. MOBILE HAMBURGER MENU
+const mobileToggle = document.getElementById('mobile-toggle');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileLinks = document.querySelectorAll('.mobile-menu-link');
+let menuOpen = false;
+
+mobileToggle.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  if(menuOpen) {
+    lenis.stop(); // Prevent ghost scrolling
+    gsap.to(mobileMenu, {autoAlpha: 1, duration: 0.4, ease: "power3.out"});
+    gsap.to('#line1', {y: 8, rotation: 45, duration: 0.3});
+    gsap.to('#line2', {opacity: 0, duration: 0.2});
+    gsap.to('#line3', {y: -8, rotation: -45, duration: 0.3});
+    gsap.fromTo(mobileLinks, {y: 20, opacity: 0}, {y: 0, opacity: 1, stagger: 0.1, duration: 0.5, ease: "power4.out", delay: 0.1});
+  } else {
+    lenis.start();
+    gsap.to(mobileMenu, {autoAlpha: 0, duration: 0.4, ease: "power3.in"});
+    gsap.to('#line1', {y: 0, rotation: 0, duration: 0.3});
+    gsap.to('#line2', {opacity: 1, duration: 0.2});
+    gsap.to('#line3', {y: 0, rotation: 0, duration: 0.3});
+  }
+});
+mobileLinks.forEach(link => { link.addEventListener('click', () => { if(menuOpen) mobileToggle.click(); }); });
+
+// 5. SMART AGENCY CURSOR & FLASHLIGHT
+const cursorGlow = document.getElementById('cursor-glow');
+const cursorDot = document.getElementById('cursor-dot');
+const cursorRing = document.getElementById('cursor-ring');
+const techStack = document.getElementById('tech-stack');
+
+if(window.innerWidth > 1024) {
+  document.addEventListener('mousemove', (e) => {
+    gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.1 });
+    gsap.to(cursorRing, { x: e.clientX, y: e.clientY, duration: 0.4, ease: "power3.out" });
+    cursorGlow.style.opacity = '1';
+    gsap.to(cursorGlow, { x: e.clientX, y: e.clientY, duration: 0.8, ease: "power3.out" });
+  });
+
+  document.addEventListener('mousedown', () => { gsap.to(cursorRing, { scale: 0.5, duration: 0.2 }); gsap.to(cursorDot, { scale: 0, duration: 0.2 }); });
+  document.addEventListener('mouseup', () => { gsap.to(cursorRing, { scale: 1, duration: 0.2 }); gsap.to(cursorDot, { scale: 1, duration: 0.2 }); });
+
+  document.querySelectorAll('.hover-explore').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      gsap.to(cursorRing, { width: 90, height: 90, background: 'var(--cyan)', border: 'none', color: '#000', duration: 0.3 });
+      cursorRing.innerText = 'Explore';
+      gsap.to(cursorDot, { opacity: 0, duration: 0.2 });
+    });
+    el.addEventListener('mouseleave', () => {
+      gsap.to(cursorRing, { width: 44, height: 44, background: 'transparent', border: '1px solid rgba(0,212,255,0.6)', color: 'transparent', duration: 0.3 });
+      cursorRing.innerText = '';
+      gsap.to(cursorDot, { opacity: 1, duration: 0.2 });
+    });
+  });
+
+  document.querySelectorAll('a, button, .hover-link').forEach(el => {
+    el.addEventListener('mouseenter', () => { gsap.to(cursorRing, { scale: 1.5, borderColor: 'var(--white)', duration: 0.3 }); });
+    el.addEventListener('mouseleave', () => { gsap.to(cursorRing, { scale: 1, borderColor: 'rgba(0,212,255,0.6)', duration: 0.3 }); });
+  });
+
+  document.querySelectorAll('.magnetic-wrap').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const r = btn.getBoundingClientRect();
+      gsap.to(btn, { x: (e.clientX - r.left - r.width/2)*0.4, y: (e.clientY - r.top - r.height/2)*0.4, duration: 0.4, ease: "power2.out" });
+      gsap.to(cursorRing, { x: e.clientX, y: e.clientY, scale: 0.1, duration: 0.1 }); 
+    });
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
+      gsap.to(cursorRing, { scale: 1, duration: 0.3 });
+    });
+  });
+
+  document.querySelectorAll('.spotlight-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--x', `${e.clientX - r.left}px`);
+      card.style.setProperty('--y', `${e.clientY - r.top}px`);
+    });
+  });
+
+  // Neural Grid Flashlight
+  if(techStack) {
+    techStack.addEventListener('mousemove', (e) => {
+      const rect = techStack.getBoundingClientRect();
+      techStack.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+      techStack.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+      techStack.querySelectorAll('.tool-badge').forEach(badge => {
+        const badgeRect = badge.getBoundingClientRect();
+        badge.style.setProperty('--mouse-x', `${e.clientX - badgeRect.left}px`);
+        badge.style.setProperty('--mouse-y', `${e.clientY - badgeRect.top}px`);
+      });
+    });
+  }
+
+  // Prevent Cursor Overlapping Forms
+  document.querySelectorAll('.form-input').forEach(el => {
+    el.addEventListener('mouseenter', () => { gsap.to([cursorRing, cursorDot], { opacity: 0, duration: 0.2 }); });
+    el.addEventListener('mouseleave', () => { gsap.to([cursorRing, cursorDot], { opacity: 1, duration: 0.2 }); });
+  });
+}
+
+function scrambleText(element) {
+  const original = element.getAttribute('data-text');
+  let iter = 0; const maxIter = 25;
+  const interval = setInterval(() => {
+    element.innerText = original.split('').map((char, index) => {
+      if(char === ' ' || char === '–') return char;
+      if(index < iter / (maxIter/original.length)) return char;
+      return chars[Math.floor(Math.random() * chars.length)];
+    }).join('');
+    iter++;
+    if(iter > maxIter) { clearInterval(interval); element.innerText = original; }
+  }, 30);
+}
+
+// 6. MAIN ANIMATIONS (Bulletproof)
+function initSiteAnimations() {
+  
+  // Safe Fade Ups
+  gsap.utils.toArray('.fade-up').forEach(el => {
+    gsap.to(el, {
+      y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 85%" }
+    });
+  });
+
+  setTimeout(() => { document.querySelectorAll('.hero-stats .scramble-text').forEach(el => scrambleText(el)); }, 800);
+
+  gsap.to('.grid-bg-wrapper', { y: 200, scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true }});
+  gsap.to('#marquee-text', { xPercent: -50, ease: "none", scrollTrigger: { trigger: ".marquee-wrapper", start: "top bottom", end: "bottom top", scrub: 1 }});
+
+  document.querySelectorAll('.color-shift-trigger').forEach(section => {
+    ScrollTrigger.create({ trigger: section, start: "top 50%", end: "bottom 50%", onEnter: () => document.body.style.backgroundColor = section.dataset.color, onEnterBack: () => document.body.style.backgroundColor = section.dataset.color });
+  });
+
+  if(window.innerWidth > 900) {
+    const horizContainer = document.getElementById("horizontal-container");
+    gsap.to(horizContainer, { x: () => -(horizContainer.scrollWidth - window.innerWidth + 100), ease: "none", scrollTrigger: { trigger: "#horizontal-section", pin: true, scrub: 1, end: () => "+=" + horizContainer.scrollWidth, invalidateOnRefresh: true } });
+  }
+
+  if(window.innerWidth > 1024) {
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        gsap.to(card, { rotateX: ((e.clientY - r.top - r.height/2)/r.height/2)*-8, rotateY: ((e.clientX - r.left - r.width/2)/r.width/2)*8, transformPerspective: 1000, duration: 0.4 });
+      });
+      card.addEventListener('mouseleave', () => gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" }));
+    });
+  }
+}
+
+window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40); });
+
+// 7. ROCK SOLID API LOGIC
 const SAMPLE={
   blueprintName:"Lead-to-Booked-Call Automation System",
   problem:"Potential clients submit inquiries but receive slow or no follow-up, causing daily revenue loss.",
   steps:[
-    {step:1,title:"Instant Lead Capture",description:"Web form or Typeform captures lead details and instantly triggers the entire workflow — no manual monitoring required.",tool:"Typeform + Make.com"},
-    {step:2,title:"60-Second WhatsApp Reply",description:"AI-personalised WhatsApp message fires within 60 seconds of inquiry, 24/7 — before any competitor can respond.",tool:"Manychat + WhatsApp Business"},
-    {step:3,title:"CRM Auto-Update",description:"Lead data logged automatically in your CRM with tags, source, and follow-up date. Zero manual data entry ever again.",tool:"Airtable"},
-    {step:4,title:"Smart Email Nurture Sequence",description:"3-email sequence sends automatically over 5 days — sharing case studies, results, and a direct booking link.",tool:"Brevo"},
-    {step:5,title:"Calendar Booking + Reminders",description:"Qualified leads book directly into your calendar. Auto-confirmation + reminder sent 24hr and 1hr before each call.",tool:"Calendly + Make.com"}
+    {step:1,title:"Instant Lead Capture",description:"Web form or Typeform captures lead details and instantly triggers the entire workflow.",tool:"Typeform + Make.com"},
+    {step:2,title:"60-Second WhatsApp Reply",description:"AI-personalised WhatsApp message fires within 60 seconds of inquiry, 24/7.",tool:"Manychat + WhatsApp Business"},
+    {step:3,title:"CRM Auto-Update",description:"Lead data logged automatically in your CRM with tags, source, and follow-up date.",tool:"Airtable"},
+    {step:4,title:"Smart Email Nurture Sequence",description:"3-email sequence sends automatically over 5 days — sharing case studies and booking link.",tool:"Brevo"},
+    {step:5,title:"Calendar Booking + Reminders",description:"Qualified leads book directly into your calendar. Auto-confirmation + reminders sent.",tool:"Calendly + Make.com"}
   ],
   timeSaved:"12 hours per week",
   moneySaved:"$3,000–$6,000",
@@ -683,40 +995,32 @@ async function generateBlueprint(){
   const timewaster=document.getElementById('timewaster').value.trim()
   const errEl=document.getElementById('form-error')
 
-  if(!biz||!timewaster){
-    errEl.textContent='Please fill in your business type and biggest time-waster.'
-    errEl.style.display='block'
-    return
-  }
+  if(!biz||!timewaster){ errEl.textContent='Please fill in your business type and biggest time-waster.'; errEl.style.display='block'; return; }
   errEl.style.display='none'
 
   const btn=document.getElementById('generate-btn')
   btn.disabled=true
-  btn.innerHTML='<span class="spinner"></span> Generating your blueprint...'
+  btn.innerHTML='<span class="spinner"></span> Compiling Blueprint...'
+  
+  // Terminal processing effect & Laser
+  gsap.to('#blueprint-form', { opacity: 0.6, scale: 0.98, filter: "brightness(0.8) hue-rotate(180deg)", duration: 0.4 });
+  const laser = document.getElementById('laser-scan');
+  gsap.fromTo(laser, {top: '-10%', opacity: 1}, {top: '110%', opacity: 0, duration: 1.5, repeat: 1, ease: "linear"});
 
-  let blueprint=null
+  let blueprint=null;
   try{
-    const res=await fetch('/api/generate',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        businessType:biz,
-        teamSize:document.getElementById('team-size').value,
-        timewaster,
-        tools:document.getElementById('current-tools').value
-      })
-    })
-    if(res.ok)blueprint=await res.json()
-  }catch(e){}
-
-  if(!blueprint){
-    await new Promise(r=>setTimeout(r,1800))
-    blueprint=SAMPLE
+    const res=await fetch('/api/generate',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ businessType:biz, teamSize:document.getElementById('team-size').value, timewaster, tools:document.getElementById('current-tools').value }) });
+    if(res.ok)blueprint=await res.json();
+  }catch(e){
+    console.log("API offline, falling back to local simulation.");
   }
 
-  renderBlueprint(blueprint)
-  btn.disabled=false
-  btn.innerHTML='⚡ Generate My Free Blueprint'
+  if(!blueprint){ await new Promise(r=>setTimeout(r,1500)); blueprint=SAMPLE; }
+
+  renderBlueprint(blueprint);
+  btn.disabled=false;
+  btn.innerHTML='⚡ Generate Our Free Blueprint';
+  gsap.to('#blueprint-form', { opacity: 1, scale: 1, filter: "none", duration: 0.4 });
 }
 
 function renderBlueprint(b){
@@ -738,21 +1042,24 @@ function renderBlueprint(b){
         ${i<b.steps.length-1?'<div class="step-line"></div>':''}
       </div>
       <div style="flex:1;padding-bottom:${i<b.steps.length-1?'8':'0'}px">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:4px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:8px">
           <span class="step-title">${s.title}</span>
           <span class="step-tool">${s.tool}</span>
         </div>
-        <p class="muted" style="font-size:.86rem">${s.description}</p>
+        <p class="muted" style="font-size:1.05rem; line-height: 1.6;">${s.description}</p>
       </div>
     </div>
   `).join('')
 
   const result=document.getElementById('blueprint-result')
   result.style.display='block'
-  result.style.animation='none'
-  result.offsetHeight
-  result.style.animation='fadeUp .5s ease both'
-  setTimeout(()=>result.scrollIntoView({behavior:'smooth',block:'start'}),100)
+  
+  gsap.fromTo(result, 
+    { y: 100, opacity: 0, scale: 0.95 },
+    { y: 0, opacity: 1, scale: 1, duration: 1.2, ease: "power4.out" }
+  );
+  
+  setTimeout(() => lenis.scrollTo(result, { offset: -120 }), 100);
 }
 </script>
 </body>
